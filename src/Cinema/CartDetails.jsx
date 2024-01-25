@@ -7,6 +7,18 @@ import deleteIcon from "../assets/delete.svg"
 const CartDetails = ({ onClose }) => {
   const { cartData, setCartData } = useContext(MovieContext)
 
+  function handleDeleteMovie(event,movieId){
+
+    event.preventDefault()
+
+    const removeMovie=cartData.filter((movie)=>{
+     return movie.id!==movieId
+    })
+
+    setCartData([...removeMovie])
+
+  }
+
   return (
     <Fragment>
 
@@ -24,34 +36,42 @@ const CartDetails = ({ onClose }) => {
             <div
               className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14"
             >
-              {cartData.map((movie) => (
-                <div className="grid grid-cols-[1fr_auto] gap-4">
-                  <div className="flex items-center gap-4">
-                    <img
-                      className="rounded overflow-hidden"
-                      width="50px"
-                      height="50px"
-                      src={getImageUrl(`${movie.cover}`)}
-                      alt=""
-                    />
-                    <div>
-                      <h3 className="text-base md:text-xl font-bold">{movie.title}</h3>
-                      <p className="max-md:text-xs text-[#575A6E]">
-                        {movie.genre}
-                      </p>
-                      <span className="max-md:text-xs">${movie.price}</span>
+              {
+                cartData.length===0?
+                (<p className="text-center text-xl" >
+                 The Cart is empty
+                </p>)
+                : 
+                (cartData.map((movie) => (
+                  <div key={movie.id} className="grid grid-cols-[1fr_auto] gap-4">
+                    <div className="flex items-center gap-4">
+                      <img
+                        className="rounded overflow-hidden"
+                        width="50px"
+                        height="50px"
+                        src={getImageUrl(`${movie.cover}`)}
+                        alt=""
+                      />
+                      <div>
+                        <h3 className="text-base md:text-xl font-bold">{movie.title}</h3>
+                        <p className="max-md:text-xs text-[#575A6E]">
+                          {movie.genre}
+                        </p>
+                        <span className="max-md:text-xs">${movie.price}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between gap-4 items-center">
+                      <button
+                      onClick={()=>handleDeleteMovie(event,movie.id)}
+                        className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
+                      >
+                        <img className="w-5 h-5" src={deleteIcon} alt="" />
+                        <span className="max-md:hidden">Remove</span>
+                      </button>
                     </div>
                   </div>
-                  <div className="flex justify-between gap-4 items-center">
-                    <button
-                      className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
-                    >
-                      <img className="w-5 h-5" src={deleteIcon} alt="" />
-                      <span className="max-md:hidden">Remove</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
+                )))
+              }
 
 
             </div>
