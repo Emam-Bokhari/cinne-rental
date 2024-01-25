@@ -1,15 +1,38 @@
-import { Fragment, useState } from "react"
+import { Fragment, useContext, useState } from "react"
 import starIcon from "./../assets/star.svg"
 import tagIcon from "./../assets/tag.svg"
 import { getImageUrl } from "./../utils/cine-utility"
 import Rating from "./Rating"
 import MovieDetailsModal from "./MovieDetailsModal"
+import { MovieContext } from "../context"
 
 const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false)
     const [selectedMovie, setSelectedMovie] = useState(null)
 
-    
+    const {cartData, setCartData } = useContext(MovieContext)
+
+    function handleAddToCart(event, movie) {
+        event.stopPropagation()
+        // console.log(movie)
+
+        const found=cartData.find((item)=>{
+            return item.id===movie.id
+        })
+
+        if (!found) {
+            setCartData([
+                ...cartData,
+                movie
+            ])
+        } else {
+            alert(`This ${movie.title} is already added!`)
+        }
+
+
+    }
+
+
     // movieDetails Modal close
     function handleModalClose() {
         setSelectedMovie(null)
@@ -26,7 +49,7 @@ const MovieCard = ({ movie }) => {
         <Fragment>
             {showModal && <MovieDetailsModal movie={selectedMovie} onModalClose={handleModalClose} />}
             <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
-                <a onClick={()=>handleMovieSelection(movie)} href="#">
+                <a onClick={() => handleMovieSelection(movie)} href="#">
                     <img className="w-full object-cover" src={getImageUrl(`${movie.cover}`)} alt="" />
                     <figcaption className="pt-4">
                         <h3 className="text-xl mb-1">{movie.title}</h3>
@@ -37,7 +60,9 @@ const MovieCard = ({ movie }) => {
                             <Rating rating={movie.rating} />
 
                         </div>
-                        <a className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
+                        <a
+                            onClick={(event) => handleAddToCart(event, movie)}
+                            className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
                             href="#">
                             <img src={tagIcon} alt="" />
                             <span>${movie.price} | Add to Cart</span>

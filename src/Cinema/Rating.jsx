@@ -3,11 +3,11 @@ import starIcon from "../assets/star.svg"
 
 const Rating = ({ rating }) => {
     const stars = Array(rating).fill(starIcon)
-    console.log(stars)
+    // console.log(stars)
     return (
         <Fragment>
-            {stars.map((star) => (
-                <img src={star} height="14" width="14" alt="star" />
+            {stars.map((star,index) => (
+                <img key={index} src={star} height="14" width="14" alt="star" />
             ))}
         </Fragment>
     )
