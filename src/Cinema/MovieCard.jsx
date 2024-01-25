@@ -7,22 +7,26 @@ import MovieDetailsModal from "./MovieDetailsModal"
 
 const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false)
+    const [selectedMovie, setSelectedMovie] = useState(null)
 
-    // movieDetails Modal open
-    function handleMovieDetailsModal() {
-        setShowModal(true)
+    
+    // movieDetails Modal close
+    function handleModalClose() {
+        setSelectedMovie(null)
+        setShowModal(false)
     }
 
-    // movieDetails Modal close
-    function handleModalClose(){
-        setShowModal(false)
+    // movieDetails Modal open
+    function handleMovieSelection(movie) {
+        setSelectedMovie(movie)
+        setShowModal(true)
     }
 
     return (
         <Fragment>
-            {showModal && <MovieDetailsModal movie={movie} onModalClose={handleModalClose} />}
+            {showModal && <MovieDetailsModal movie={selectedMovie} onModalClose={handleModalClose} />}
             <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
-                <a onClick={handleMovieDetailsModal} href="#">
+                <a onClick={()=>handleMovieSelection(movie)} href="#">
                     <img className="w-full object-cover" src={getImageUrl(`${movie.cover}`)} alt="" />
                     <figcaption className="pt-4">
                         <h3 className="text-xl mb-1">{movie.title}</h3>
