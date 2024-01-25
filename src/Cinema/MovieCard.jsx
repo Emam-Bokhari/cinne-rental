@@ -16,9 +16,9 @@ const MovieCard = ({ movie }) => {
         event.stopPropagation()
         // console.log(movie)
 
-        const found=cartData.find((item)=>{
-            return item.id===movie.id
-        })
+        const found = cartData.find((item) => {
+            return item.id === movie.id;
+        });
 
         if (!found) {
             setCartData([
@@ -47,7 +47,7 @@ const MovieCard = ({ movie }) => {
 
     return (
         <Fragment>
-            {showModal && <MovieDetailsModal movie={selectedMovie} onModalClose={handleModalClose} />}
+            {showModal && <MovieDetailsModal movie={selectedMovie} onModalClose={handleModalClose} onCartAdd={handleAddToCart}/>}
             <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
                 <a onClick={() => handleMovieSelection(movie)} href="#">
                     <img className="w-full object-cover" src={getImageUrl(`${movie.cover}`)} alt="" />

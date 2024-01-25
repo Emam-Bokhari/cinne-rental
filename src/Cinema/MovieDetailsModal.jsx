@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { getImageUrl } from "../utils/cine-utility"
 
 
-const MovieDetailsModal = ({onModalClose,movie}) => {
+const MovieDetailsModal = ({onModalClose,movie,onCartAdd}) => {
     return (
         <Fragment>
 
@@ -32,6 +32,7 @@ const MovieDetailsModal = ({onModalClose,movie}) => {
                             </p>
                             <div className="grid lg:grid-cols-2 gap-2">
                                 <a
+                                onClick={event,onCartAdd}
                                     className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
                                     href="#"
                                 >
