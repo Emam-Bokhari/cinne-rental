@@ -1,6 +1,8 @@
 import { Fragment } from "react"
+import { getImageUrl } from "../utils/cine-utility"
 
-const MovieDetailsModal = () => {
+
+const MovieDetailsModal = ({onModalClose,movie}) => {
     return (
         <Fragment>
 
@@ -15,22 +17,18 @@ const MovieDetailsModal = () => {
                     >
                         <img
                             className="sm:order-2 w-full object-cover h-full max-sm:max-h-[300px]"
-                            src="../assets/movie-1.png"
+                            src={getImageUrl(`${movie.cover}`)}
                             alt=""
                         />
                         <div className="p-5 lg:p-11">
                             <div className="">
-                                <h2 className="text-3xl lg:text-[50px] mb-2 font-bold">Iron Man</h2>
+                                <h2 className="text-3xl lg:text-[50px] mb-2 font-bold">{movie.title}</h2>
                                 <span
-                                    className="block text-base text-[#9fa0a4] dark:text-[#575A6E] my-3">Action/Adventure/Sci-fi</span>
+                                    className="block text-base text-[#9fa0a4] dark:text-[#575A6E] my-3">{movie.genre}</span>
                                 <div></div>
                             </div>
                             <p className="text-sm lg:text-base mb-8 lg:mb-16">
-                                When Branch’s brother, Floyd, is kidnapped for his musical talents
-                                by a pair of nefarious pop-star villains, Branch and Poppy embark
-                                on a harrowing and emotional journey to reunite the other brothers
-                                and rescue Floyd from a fate even worse than pop-culture
-                                obscurity.
+                                {movie.description}
                             </p>
                             <div className="grid lg:grid-cols-2 gap-2">
                                 <a
@@ -38,9 +36,10 @@ const MovieDetailsModal = () => {
                                     href="#"
                                 >
                                     <img src="../assets/tag.svg" alt="" />
-                                    <span>$100 | Add to Cart</span>
+                                    <span>${movie.price} | Add to Cart</span>
                                 </a>
                                 <a
+                                onClick={onModalClose}
                                     className="border border-[#74766F] rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#6F6F6F] dark:text-gray-200 font-semibold text-sm"
                                     href="#"
                                 >

@@ -8,13 +8,19 @@ import MovieDetailsModal from "./MovieDetailsModal"
 const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false)
 
+    // movieDetails Modal open
     function handleMovieDetailsModal() {
         setShowModal(true)
     }
 
+    // movieDetails Modal close
+    function handleModalClose(){
+        setShowModal(false)
+    }
+
     return (
         <Fragment>
-            {showModal && <MovieDetailsModal />}
+            {showModal && <MovieDetailsModal movie={movie} onModalClose={handleModalClose} />}
             <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
                 <a onClick={handleMovieDetailsModal} href="#">
                     <img className="w-full object-cover" src={getImageUrl(`${movie.cover}`)} alt="" />
