@@ -10,21 +10,27 @@ const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false)
     const [selectedMovie, setSelectedMovie] = useState(null)
 
-    const {cartData, setCartData } = useContext(MovieContext)
+    const { state, dispatch } = useContext(MovieContext)
 
     function handleAddToCart(event, movie) {
         event.stopPropagation()
         // console.log(movie)
 
-        const found = cartData.find((item) => {
+        const found = state.cartData.find((item) => {
             return item.id === movie.id;
         });
 
         if (!found) {
-            setCartData([
-                ...cartData,
-                movie
-            ])
+            dispatch({
+                type:"Add_To_Cart",
+                payload:{
+                    ...movie 
+                }
+            })
+            // setCartData([
+            //     ...cartData,
+            //     movie
+            // ])
         } else {
             alert(`This ${movie.title} is already added!`)
         }
@@ -47,7 +53,7 @@ const MovieCard = ({ movie }) => {
 
     return (
         <Fragment>
-            {showModal && <MovieDetailsModal movie={selectedMovie} onModalClose={handleModalClose} onCartAdd={handleAddToCart}/>}
+            {showModal && <MovieDetailsModal movie={selectedMovie} onModalClose={handleModalClose} onCartAdd={handleAddToCart} />}
             <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
                 <a onClick={() => handleMovieSelection(movie)} href="#">
                     <img className="w-full object-cover" src={getImageUrl(`${movie.cover}`)} alt="" />

@@ -9,7 +9,7 @@ import { MovieContext, ThemeContext } from "./context"
 
 const Navbar = () => {
 	const [showCart, setShowCart] = useState(false)
-	const { cartData } = useContext(MovieContext)
+	const { state } = useContext(MovieContext)
 	const {darkMode,setDarkMode}=useContext(ThemeContext)
 
 	function handleShowCart() {
@@ -53,7 +53,7 @@ const Navbar = () => {
 								onClick={handleShowCart}
 								className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block" href="#">
 								<img src={cartIcon} width="24" height="24" alt="" />
-								{cartData.length > 0 && <span className="rounded-full absolute top-[-12px] left-[22px] bg-[#12CF6F] text-white text-center w-[22px] h-[22px] " >{cartData.length}</span>}
+								{state.cartData.length > 0 && <span className="rounded-full absolute top-[-12px] left-[22px] bg-[#12CF6F] text-white text-center w-[22px] h-[22px] " >{state.cartData.length}</span>}
 							</a>
 
 						</li>

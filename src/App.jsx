@@ -1,23 +1,24 @@
-import { Fragment, useState } from "react"
+import { Fragment, useState, useReducer } from "react"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import MovieList from "./Cinema/MovieList"
 import Footer from "./Footer"
 import { MovieContext, ThemeContext } from "./context"
+import { cartReducer, initialState } from "./reducers/cartReducer"
 
 
 const App = () => {
-    const [cartData, setCartData] = useState([])
     const [darkMode, setDarkMode] = useState(true)
+    const [state, dispatch] = useReducer(cartReducer, initialState)
 
     return (
         <Fragment>
 
             <ThemeContext.Provider value={{ darkMode, setDarkMode }} >
 
-                <MovieContext.Provider value={{ cartData, setCartData }}>
+                <MovieContext.Provider value={{ state, dispatch }}>
 
-                    <div className={`${darkMode ? "dark" : ""}`} >
+                    <div className={`h-full w-full ${darkMode ? "dark" : ""}`} >
 
                         <Navbar />
 
