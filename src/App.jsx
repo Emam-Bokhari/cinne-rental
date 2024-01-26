@@ -3,33 +3,43 @@ import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import MovieList from "./Cinema/MovieList"
 import Footer from "./Footer"
-import { MovieContext } from "./context"
+import { MovieContext, ThemeContext } from "./context"
 
 
 const App = () => {
     const [cartData, setCartData] = useState([])
+    const [darkMode, setDarkMode] = useState(true)
+
     return (
         <Fragment>
 
-            <MovieContext.Provider value={{ cartData, setCartData }}>
+            <ThemeContext.Provider value={{ darkMode, setDarkMode }} >
 
-                <Navbar />
+                <MovieContext.Provider value={{ cartData, setCartData }}>
 
-                <main>
+                    <div className={`${darkMode ? "dark" : ""}`} >
 
-                    <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
+                        <Navbar />
 
-                        <Sidebar />
+                        <main>
 
-                        <MovieList />
+                            <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
+
+                                <Sidebar />
+
+                                <MovieList />
+
+                            </div>
+
+                        </main>
+
+                        <Footer />
 
                     </div>
 
-                </main>
+                </MovieContext.Provider>
 
-                <Footer />
-
-            </MovieContext.Provider>
+            </ThemeContext.Provider>
 
 
         </Fragment>
